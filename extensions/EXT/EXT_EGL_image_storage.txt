@@ -40,9 +40,9 @@ Dependencies
 
     The EGL_KHR_gl_texture_2D_image, EGL_KHR_gl_texture_cubemap_image,
     EGL_KHR_gl_texture_3D_image, EGL_KHR_gl_renderbuffer_image,
-    EGL_KHR_vg_parent_image, and EGL_ANDROID_get_native_client_buffer
-    extensions provide additional functionality layered on EGL_KHR_image_base
-    and related to this extension.
+    EGL_KHR_vg_parent_image, EGL_ANDROID_get_native_client_buffer, and
+    EXT_image_dma_buf_import extensions provide additional functionality
+    layered on EGL_KHR_image_base and related to this extension.
 
     EXT_direct_state_access, ARB_direct_state_access, and OpenGL 4.5 affect
     the definition of this extension.
@@ -139,6 +139,18 @@ Samplers)
     eglImageOES <image> (if, for example, <image> refers to a multisampled
     eglImageOES, or <target> is GL_TEXTURE_2D but <image> contains a cube map),
     the error INVALID_OPERATION is generated.
+
+    If the EGL image was created was created using EGL_EXT_image_dma_buf_import,
+    then the following applies:
+
+        - <target> must be GL_TEXTURE_2D or GL_TEXTURE_EXTERNAL_OES. Otherwise,
+          the error INVALID_OPERATION is generated.
+        - if <target> is GL_TEXTURE_2D, then the resultant texture must have
+          a sized internal format with the same component ordering as the
+          dma-buf. If the GL is unable to determine such a format, the error
+          INVALID_OPERATION is generated.
+        - if <target> is GL_TEXTURE_EXTERNAL_OES, the internal format of the
+          texture is implementation defined.
 
     If <attrib_list> is neither NULL nor a pointer to the value GL_NONE, the
     error INVALID_VALUE is generated.
